@@ -88,8 +88,16 @@ class Client(object):
 
         errors = json.get('errors')
         if errors:
-            raise ExtendAPIError(errors['error']['message'],
-                                 int(errors['error']['code']))
+            if type(errors['error']) is list:
+                # Since raising multiple exceptions is a bit silly, simply
+                # raise the first
+                message = errors['error'][0]['message']
+                code = errors['error'][0]['code']
+            else:
+                message = errors['error']['message']
+                code = errors['error']['code']
+            raise ExtendAPIError(message, int(code))
+
         return json
 
     def __getattr__(self, name):
