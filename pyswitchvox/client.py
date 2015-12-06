@@ -53,18 +53,20 @@ class Client(object):
     """A client back to the Switchvox Extend API
     """
 
-    def __init__(self, address, username, password):
+    def __init__(self, address, username, password, timeout=30):
         """Create a new client connection
 
         Keyword Arguments:
         address  The address of the Switchvox server
         username The admin username
         password The admin password
+        timeout  The timeout to use for requests. Defaults to 30.
         """
 
         self._address = address
         self._session = requests.Session()
         self._session.auth = HTTPDigestAuth(username, password)
+        self.timeout = timeout
 
     def close(self):
         """Close the client connection
@@ -79,6 +81,7 @@ class Client(object):
         # verify the cert
         response = self._session.post('https://' + self._address + '/json',
             json=query,
+            timeout=self.timeout,
             verify=False)
 
         if (response.status_code / 100 != 2):
