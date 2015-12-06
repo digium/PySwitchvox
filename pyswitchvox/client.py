@@ -7,6 +7,10 @@ Matthew Jordan <mjordan@digium.com>
 from requests.auth import HTTPDigestAuth
 import requests
 
+# Since Switchvox uses a self signed cert, disable the spammy
+# warning message.
+requests.packages.urllib3.disable_warnings()
+
 class HTTPException(Exception):
     """An exception raised if a non-success response is returned
     """
