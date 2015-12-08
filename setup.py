@@ -30,5 +30,5 @@ setup(
         "Programming Language :: Python",
     ],
     tests_require=[],
-    install_requires=["requests>=2.8.2"],
+    install_requires=["requests>=2.8.1"],
 )
