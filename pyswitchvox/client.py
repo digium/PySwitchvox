@@ -78,7 +78,7 @@ class Client(object):
                                json={}, 
                                auth=auth)
         if r.status_code == 401:
-            auth = requests.auth.BasicAuth(username, password)
+            auth = requests.auth.HTTPBasicAuth(username, password)
         return auth
     
     def close(self):
