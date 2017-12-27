@@ -12,7 +12,7 @@ from setuptools import setup
 
 setup(
     name="pyswitchvox",
-    version="0.0.1",
+    version="0.0.2",
     license="BSD 3-Clause License",
     description="Library for accessing the Switchvox Extend API",
     long_description=open(os.path.join(os.path.dirname(__file__),
