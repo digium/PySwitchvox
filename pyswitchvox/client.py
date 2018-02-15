@@ -65,9 +65,23 @@ class Client(object):
 
         self._address = address
         self._session = requests.Session()
-        self._session.auth = HTTPDigestAuth(username, password)
+        self._session.auth = self._detect_auth(username, password, address)
         self.timeout = timeout
 
+    def _detect_auth(self, username, password, hostname):
+        """Switchvox 6.6.0.x changed authentication methods.                
+        Returns the request auth object. 
+        """
+        auth = HTTPDigestAuth(username, password)
+
+        r = self._session.post("https://" + hostname + "/json", 
+                               json={}, 
+                               auth=auth, 
+                               verify=False)
+        if r.status_code == 401:
+            auth = requests.auth.HTTPBasicAuth(username, password)
+        return auth
+    
     def close(self):
         """Close the client connection
         """
