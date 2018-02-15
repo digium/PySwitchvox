@@ -76,7 +76,8 @@ class Client(object):
 
         r = self._session.post("https://" + hostname + "/json", 
                                json={}, 
-                               auth=auth)
+                               auth=auth, 
+                               verify=False)
         if r.status_code == 401:
             auth = requests.auth.HTTPBasicAuth(username, password)
         return auth
